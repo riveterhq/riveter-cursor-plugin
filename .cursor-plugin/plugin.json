@@ -1,0 +1,27 @@
+{
+  "name": "riveter",
+  "displayName": "Riveter",
+  "version": "1.0.0",
+  "description": "Build datasets, run AI enrichments, scrape webpages, and schedule monitors with Riveter",
+  "author": {
+    "name": "Riveter",
+    "email": "support@riveterhq.com"
+  },
+  "homepage": "https://docs.riveterhq.com",
+  "repository": "https://github.com/riveterhq/riveter-cursor-plugin",
+  "license": "MIT",
+  "logo": "./assets/logo.svg",
+  "keywords": [
+    "riveter",
+    "enrichment",
+    "dataset",
+    "scraping",
+    "research",
+    "monitors",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "rules": "./rules/",
+  "mcpServers": "mcp.json",
+  "commands": "./commands/"
+}
