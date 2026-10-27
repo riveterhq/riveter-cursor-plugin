@@ -2,7 +2,7 @@
 
 The Riveter plugin for Cursor: the MCP server entry, an always-on awareness rule, five skills, and seven slash commands. Hand-written prose over the hosted catalog; nothing here is generated. Git rules: see root [`AGENTS.md`](../AGENTS.md) — diffs only, never commit/merge/push.
 
-This directory is the source. The public repository `github.com/riveterhq/riveter-cursor-plugin`, which the Cursor Marketplace installs from, is a mirror of it: a `git subtree split` of this directory force-pushed over its `main` by `.github/workflows/publish-clients.yml` on every push to `main` that touches it (`PUBLISHING.md`; by hand when the workflow cannot run), never edited directly. Everything the public repository needs — `README.md`, `LICENSE`, `install.sh` — therefore lives here. Until 2026-10-23 the public repository was edited on its own and last pushed on 2026-04-21, with the legacy verb tool names; its uncommitted September edits were folded into this directory and are superseded.
+This directory is the source. The public repository `github.com/riveterhq/riveter-cursor-plugin`, which the Cursor Marketplace installs from, is a mirror of it: one snapshot commit of this directory pushed onto its `main` by `.github/workflows/publish-clients.yml` (`sdk/scripts/push-mirror-snapshot.sh`) on every push to `main` that changes it (`PUBLISHING.md`; by hand when the workflow cannot run), never edited directly, and carrying none of the monorepo's commits. Everything the public repository needs — `README.md`, `LICENSE`, `install.sh` — therefore lives here. Until 2026-10-23 the public repository was edited on its own and last pushed on 2026-04-21, with the legacy verb tool names; its uncommitted September edits were folded into this directory and are superseded.
 
 ## Layout
 
@@ -34,10 +34,10 @@ Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-
 
 ## Publish
 
-`PUBLISHING.md`: bump the version in `plugin.json` + `package.json` and merge to `main`; the `cursor-plugin-mirror` job of `publish-clients.yml` runs the name check, `git subtree split --prefix=cursor-plugin`, and the force-push over the mirror's `main` (secret `MIRROR_PUSH_TOKEN`). A forgotten bump fails `published-versions.yml`: `sdk/scripts/check-published-versions.mjs` compares the installed files with the mirror's at the same version. Listed with the other client releases in `docs/releasing-api-clients.md`.
+`PUBLISHING.md`: bump the version in `plugin.json` + `package.json` and merge to `main`; the `cursor-plugin-mirror` job of `publish-clients.yml` runs the name check and `sdk/scripts/push-mirror-snapshot.sh cursor-plugin …`, one snapshot commit onto the mirror's `main` (secret `MIRROR_PUSH_TOKEN`). A forgotten bump fails `published-versions.yml`: `sdk/scripts/check-published-versions.mjs` compares the installed files with the mirror's at the same version. Listed with the other client releases in `docs/releasing-api-clients.md`.
 
 ## How to regenerate
 
 Rebuild from: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/`, `skills/`, `commands/`, `test/`, `README.md`, `install.sh`, `PUBLISHING.md`, `../public/api_docs/openapi.yaml` (tool names, arguments, help topics).
 
-Last verified: 2026-10-23
+Last verified: 2026-10-27
