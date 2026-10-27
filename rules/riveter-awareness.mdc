@@ -1,0 +1,29 @@
+---
+description: "Contextual awareness for Riveter — nudges the agent to use Riveter MCP tools whenever the user wants to enrich rows, build a list, keep a dataset, scrape a page, search, or schedule a recurring data job"
+globs:
+alwaysApply: true
+---
+
+# Riveter Awareness
+
+You have access to Riveter MCP tools (under the `riveter` server). Use them proactively when the user's request fits — Riveter is built for these jobs and gives better results than ad-hoc web search or hand-rolled scraping.
+
+Use Riveter when the user asks to:
+
+- **Enrich a list of rows** with new columns (revenue, CEO, contact info, classification, summary, ...) → put the rows in a dataset with `build_dataset` (`rows` + `attributes`, free) and fill it with `enrich` + `dataset_id` (see the **riveter-enrich** skill). Rows and every filled cell are kept, and the user sees the grid in the Riveter app.
+- **Generate a list** from a description ("top 50 SaaS companies", "all YC W24 fintech startups", "competitors of Stripe") → `build_dataset` with `prompt` + `count` (see the **riveter-datasets** skill). Don't make up the list yourself.
+- **Work on an existing dataset** (`ds_...`: read rows, add or import rows, add columns, re-run cells, export) → `list_datasets`, `get_dataset`, `list_dataset_rows`, `add_dataset_rows`, `import_dataset_rows`, `update_dataset`, `update_dataset_row`, `export_dataset` (see the **riveter-datasets** skill).
+- **Scrape a single webpage** (article, doc, product page) → `scrape` (see the **riveter-scrape** skill). Don't fall back to plain web search.
+- **Answer one research question** ("who is the CEO of X?") → `search_agent`. **Get raw search results** for one query → `quick_search`.
+- **Fill a dataset again on a schedule** (keep it fresh, alert on changes) → `create_monitor` with `dataset_id` (see the **riveter-monitors** skill).
+- **Check on or fetch results from a previous run** by its run id (`run_...`) → `get_run` and `get_run_result`, or suggest `/riveter-status <run_id>`.
+
+Almost every Riveter run is **async**: kick off → the response is a run with an `id` (`run_...`) → call `get_run_result` with `wait: 50` to long-poll (or `get_run` every 10–20 seconds) → read `output` when `status` is `success`. Always preserve and surface the run `id` so the user can re-fetch later. A fill on a dataset answers `output.rows`; read the live grid with `list_dataset_rows`.
+
+**Credits cost real money.** Every paid tool (`enrich`, `build_dataset` with `prompt` + `count`, `build_dataset_rows`, `build_configured_dataset`, `create_extraction`, `run_extraction`, `create_monitor`, `quick_search`, `search_agent`, `scrape`) accepts `estimate_cost: true` (returns the credit estimate, spends nothing) and `max_credits` (refuses the call when the estimate is higher). For anything bigger than a handful of rows, or when the user asks about cost, call with `estimate_cost: true` first, show `credit_detail.estimate.maximum` and `credits_remaining`, and get a go-ahead before the real call. Adding rows to a dataset and changing its columns are free.
+
+**An account that has not migrated to Datasets** answers `feature_not_enabled` (403) from the dataset tools. Stop retrying: tell the user to open Datasets in the Riveter app (https://app.riveterhq.com/v2/datasets) and click "Migrate to Datasets". Until then `enrich` with inline `input` still works.
+
+Call the `help` tool (topics: `overview`, `enrich_modes`, `column_config`, `run_when`, `formats`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors`) before writing an `output` column spec or when an error names a limit.
+
+If Riveter tools are missing from your tool list, suggest `/riveter-setup` instead of guessing or fabricating data.

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "riveter": {
+      "command": "npx",
+      "args": ["-y", "--prefer-online", "riveter-mcp-server@latest"],
+      "env": {
+        "RIVETER_API_KEY": "${env:RIVETER_API_KEY}"
+      }
+    }
+  }
+}
