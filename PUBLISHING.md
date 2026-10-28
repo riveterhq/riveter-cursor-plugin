@@ -10,8 +10,8 @@ reach it. There is no registry upload; "publishing" is pushing the mirror.
 on every push to `main` that touches this directory or the spec: it runs
 `test/check-plugin-names.mjs`, then `sdk/scripts/push-mirror-snapshot.sh` pushes the
 snapshot with the `MIRROR_PUSH_TOKEN` secret (nothing when the mirror already carries
-the directory's tree). Never push from an agent (see the repo git rules); the workflow
-and the user do.
+the directory's tree). The by-hand push below uses the engineer's own GitHub credentials
+and is the engineer's step, not an agent's.
 
 ## Release checklist
 

@@ -1,6 +1,6 @@
 # cursor-plugin
 
-The Riveter plugin for Cursor: the MCP server entry, an always-on awareness rule, five skills, and seven slash commands. Hand-written prose over the hosted catalog; nothing here is generated. Git rules: see root [`AGENTS.md`](../AGENTS.md) — diffs only, never commit/merge/push.
+The Riveter plugin for Cursor: the MCP server entry, an always-on awareness rule, five skills, and seven slash commands. Hand-written prose over the hosted catalog; nothing here is generated. Git workflow: root [`AGENTS.md`](../AGENTS.md).
 
 This directory is the source. The public repository `github.com/riveterhq/riveter-cursor-plugin`, which the Cursor Marketplace installs from, is a mirror of it: one snapshot commit of this directory pushed onto its `main` by `.github/workflows/publish-clients.yml` (`sdk/scripts/push-mirror-snapshot.sh`) on every push to `main` that changes it (`PUBLISHING.md`; by hand when the workflow cannot run), never edited directly, and carrying none of the monorepo's commits. Everything the public repository needs — `README.md`, `LICENSE`, `install.sh` — therefore lives here. Until 2026-10-23 the public repository was edited on its own and last pushed on 2026-04-21, with the legacy verb tool names; its uncommitted September edits were folded into this directory and are superseded.
 
