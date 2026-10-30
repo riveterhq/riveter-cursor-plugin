@@ -72,7 +72,7 @@ The generator knows the existing rows and skips them. The run's `progress` repor
 
 ## Estimate First (credits cost real money)
 
-A build runs on a credit **budget**: `budget` on the request, else 50 + 1.5 per row requested (10–5,000). The budget is charged **upfront** and settled down to what the agent spent; a low budget means fewer rows. With `auto_fill: true` the fill is a second charge (rows × the per-row budget, 1.5 credits per output column by default).
+A build runs on a credit **budget**: `budget` on the request, else 50 + 1.5 per row requested (10–5,000). A deposit of the expected spend (`upfront` / `expected`) is charged when it starts; the rest is charged as it runs, up to the budget; unused deposit is refunded. A low budget means fewer rows. With `auto_fill: true` the fill is a second charge (rows × the per-row budget, 1.5 credits per output column by default).
 
 Before the real call, when `count` is more than a handful (roughly > 50) or the user asks about cost, send the **same** request with `estimate_cost: true`:
 
@@ -80,7 +80,7 @@ Before the real call, when `count` is more than a handful (roughly > 50) or the 
 build_dataset({ "name": "AI infra 2020+", "prompt": "Top 50 venture-backed AI infrastructure companies founded after 2020", "count": 50, "estimate_cost": true })
 ```
 
-The response is `{ "estimate_cost": true, "type": "dataset_build", "credit_detail": { "estimate": { "minimum", "maximum", "expected", "charged_upfront": true }, "credits_used": 0, "credits_remaining", "sufficient_credits" } }`. `maximum` is the budget; `expected` is what builds of that size have settled at. Nothing is created or charged. Tell the user `estimate.maximum`, `estimate.expected`, and `credits_remaining`, and wait for a go-ahead. If `sufficient_credits` is false, stop and say so. When the user names a ceiling, pass it as `budget` on the real call (the build spends at most that); `max_credits` instead refuses the call when the estimate is higher.
+The response is `{ "estimate_cost": true, "type": "dataset_build", "credit_detail": { "estimate": { "minimum", "maximum", "expected", "upfront", "typical": { "low", "high" }, "charged_upfront": true }, "credits_used": 0, "credits_remaining", "sufficient_credits" } }`. `upfront` / `expected` is charged now; `typical` is the recent range; `maximum` is the budget. Nothing is created or charged. Tell the user charged now, typically, at most, and `credits_remaining`, and wait for a go-ahead. If `sufficient_credits` is false, stop and say so. When the user names a ceiling, pass it as `budget` on the real call (the build spends at most that); `max_credits` instead refuses the call when the estimate is higher.
 
 Adding rows (`rows`, `add_dataset_rows`, `import_dataset_rows`) and changing columns are free.
 

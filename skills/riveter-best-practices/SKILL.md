@@ -62,7 +62,7 @@ Rules:
 
 Creating datasets, adding rows, and changing columns are free.
 
-Rough pricing: a fill is at most the enrichment's `budget_credits_per_row` per row (1.5 credits per output column by default; the budget moves with the columns unless `budget_locked`); a build = at most its budget (`budget` on the request, else 50 + 1.5 per row), charged upfront and settled to what the agent spent; `search_agent` = 1 per call; `quick_search` and `scrape` are fractional. Use `estimate_cost` for exact numbers, or call `help({ "topic": "credits" })`.
+Rough pricing: a fill is at most the enrichment's `budget_credits_per_row` per row (1.5 credits per output column by default; the budget moves with the columns unless `budget_locked`); a build = at most its budget (`budget` on the request, else 50 + 1.5 per row), with a deposit of `expected` charged now and the rest charged as it runs; `search_agent` = 1 per call; `quick_search` and `scrape` are fractional. Use `estimate_cost` for exact numbers, or call `help({ "topic": "credits" })`.
 
 ## Async pattern
 
