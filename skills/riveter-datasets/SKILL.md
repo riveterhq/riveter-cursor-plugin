@@ -1,7 +1,7 @@
 ---
 name: riveter-datasets
 description: "Generate rows of data from a natural-language description, or read and change an existing Riveter dataset (rows, columns, cells, export). Use when the user wants a list (top 100 companies, all YC W24 startups, competitors of X) and doesn't have the inputs, or names a dataset (ds_...). Estimates paid steps first."
-allowed-tools: mcp(riveter:build_dataset), mcp(riveter:build_dataset_rows), mcp(riveter:list_datasets), mcp(riveter:get_dataset), mcp(riveter:update_dataset), mcp(riveter:delete_dataset), mcp(riveter:list_dataset_rows), mcp(riveter:add_dataset_rows), mcp(riveter:import_dataset_rows), mcp(riveter:delete_dataset_rows), mcp(riveter:update_dataset_row), mcp(riveter:promote_dataset_column), mcp(riveter:export_dataset), mcp(riveter:enrich), mcp(riveter:build_configured_dataset), mcp(riveter:get_run), mcp(riveter:get_run_result), mcp(riveter:stop_run), mcp(riveter:help)
+allowed-tools: mcp(riveter:build_dataset), mcp(riveter:build_dataset_rows), mcp(riveter:list_datasets), mcp(riveter:get_dataset), mcp(riveter:update_dataset), mcp(riveter:delete_dataset), mcp(riveter:list_dataset_rows), mcp(riveter:get_dataset_summary), mcp(riveter:add_dataset_rows), mcp(riveter:import_dataset_rows), mcp(riveter:delete_dataset_rows), mcp(riveter:update_dataset_row), mcp(riveter:promote_dataset_column), mcp(riveter:export_dataset), mcp(riveter:enrich), mcp(riveter:build_configured_dataset), mcp(riveter:get_run), mcp(riveter:get_run_result), mcp(riveter:stop_run), mcp(riveter:help)
 ---
 
 # Riveter Datasets
@@ -17,7 +17,8 @@ A dataset (`ds_...`) is a grid Riveter keeps: input columns (row identity — va
 | `build_dataset` | a new dataset: rows you send (`rows`) or rows Riveter generates (`prompt` + `count`) | generating rows |
 | `build_dataset_rows` | more generated rows for an existing dataset | yes |
 | `list_datasets` / `get_dataset` | the account's datasets; one dataset's columns, `enrichment_id`, `row_count`, newest `runs` | no |
-| `list_dataset_rows` | rows in position order with every cell's `value` and `state` and the row's `credits`; page with `cursor` | no |
+| `list_dataset_rows` | rows in position order with every cell's `value` and `state` and the row's `credits`; page with `cursor`. `columns` keeps the named columns; `compact: true` answers the values alone, so a whole column of 1,000 rows is one call | no |
+| `get_dataset_summary` | per-column counts without reading rows: an output column's cells by state, `filled`, `distinct_values`, the top `values` | no |
 | `add_dataset_rows` / `import_dataset_rows` | append rows as JSON objects (100 per call) or as CSV text | no |
 | `update_dataset` | rename, set `index_column`, add / rename / remove input columns, add / change / rename / remove output columns, set `budget` / `budget_locked` | no |
 | `update_dataset_row` | one row by id or position: `input` values and / or `cells` (`manual` cells; `null` clears) | no |
@@ -96,6 +97,8 @@ Adding rows (`rows`, `add_dataset_rows`, `import_dataset_rows`) and changing col
 ```
 get_dataset({ "id": "ds_..." })
 list_dataset_rows({ "id": "ds_...", "limit": 100 })
+list_dataset_rows({ "id": "ds_...", "columns": "Company,CEO", "compact": true, "limit": 1000 })
+get_dataset_summary({ "id": "ds_...", "columns": "CEO" })
 add_dataset_rows({ "id": "ds_...", "rows": [{ "Company": "Shopify", "Website": "shopify.com" }] })
 import_dataset_rows({ "id": "ds_...", "csv": "Company,Website\nStripe,stripe.com\n" })
 ```

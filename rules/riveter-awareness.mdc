@@ -12,7 +12,7 @@ Use Riveter when the user asks to:
 
 - **Enrich a list of rows** with new columns (revenue, CEO, contact info, classification, summary, ...) → put the rows in a dataset with `build_dataset` (`rows` + `attributes`, free) and fill it with `enrich` + `dataset_id` (see the **riveter-enrich** skill). Rows and every filled cell are kept, and the user sees the grid in the Riveter app.
 - **Generate a list** from a description ("top 50 SaaS companies", "all YC W24 fintech startups", "competitors of Stripe") → `build_dataset` with `prompt` + `count` (see the **riveter-datasets** skill). Don't make up the list yourself.
-- **Work on an existing dataset** (`ds_...`: read rows, add or import rows, add columns, re-run cells, export) → `list_datasets`, `get_dataset`, `list_dataset_rows`, `add_dataset_rows`, `import_dataset_rows`, `update_dataset`, `update_dataset_row`, `export_dataset` (see the **riveter-datasets** skill).
+- **Work on an existing dataset** (`ds_...`: read rows, count a column's values or states, add or import rows, add columns, re-run cells, export) → `list_datasets`, `get_dataset`, `list_dataset_rows` (`columns` + `compact: true` for a whole column), `get_dataset_summary`, `add_dataset_rows`, `import_dataset_rows`, `update_dataset`, `update_dataset_row`, `export_dataset` (see the **riveter-datasets** skill).
 - **Scrape a single webpage** (article, doc, product page) → `scrape` (see the **riveter-scrape** skill). Don't fall back to plain web search.
 - **Answer one research question** ("who is the CEO of X?") → `search_agent`. **Get raw search results** for one query → `quick_search`.
 - **Fill a dataset again on a schedule** (keep it fresh, alert on changes) → `create_monitor` with `dataset_id` (see the **riveter-monitors** skill).

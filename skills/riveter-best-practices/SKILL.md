@@ -21,7 +21,7 @@ The MCP server exposes the [Riveter API](https://docs.riveterhq.com) as tools. E
 | Enrich rows once, nothing kept | `enrich` with inline `input` | A one-off; config from `enrichment_id`, `prompt` + `attributes`, or `output` |
 | Generate a list of rows from a prompt | `build_dataset` with `prompt` + `count` | "Give me the top 100 SaaS companies". Skill: **riveter-datasets** |
 | More generated rows for a dataset | `build_dataset_rows` | The generator skips rows the dataset already has |
-| Read a dataset | `list_datasets`, `get_dataset`, `list_dataset_rows` | Columns, `enrichment_id`, `row_count`, `runs`; rows with cell `value` + `state` |
+| Read a dataset | `list_datasets`, `get_dataset`, `list_dataset_rows`, `get_dataset_summary` | Columns, `enrichment_id`, `row_count`, `runs`; rows with cell `value` + `state` (`columns` + `compact` for a whole column); per-column counts |
 | Add rows | `add_dataset_rows` (JSON, 100 per call), `import_dataset_rows` (CSV text) | Free |
 | Change columns | `update_dataset` | Add / change / rename / remove input and output columns, `index_column`, `budget` / `budget_locked`. Free; does not run |
 | Fix one row | `update_dataset_row` | `input` values and / or `cells` by id or position |
