@@ -45,7 +45,7 @@ A monitor fills a dataset again on a schedule. Every tick runs the dataset's enr
 - `run_immediately` *(optional)* — kick off the first (paid) run right after creation
 - `estimate_cost`, `max_credits` — see below
 
-Do not pass `input`: a dataset monitor's rows are the dataset's. (`enrichment_id` still works for an enrichment bound to one dataset, and for a legacy project enrichment with `input`.)
+Do not pass `input`: a dataset monitor's rows are the dataset's. (`enrichment_id` also works for an enrichment bound to one dataset.)
 
 ### Example: weekly Monday 9am ET, alert only when data changes
 

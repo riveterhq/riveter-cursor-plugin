@@ -24,6 +24,6 @@ Almost every Riveter run is **async**: kick off → the response is a run with a
 
 **An account that has not migrated to Datasets** answers `feature_not_enabled` (403) from the dataset tools. Stop retrying: tell the user to open Datasets in the Riveter app (https://app.riveterhq.com/v2/datasets) and click "Migrate to Datasets". Until then `enrich` with inline `input` still works.
 
-Call the `help` tool (topics: `overview`, `enrich_modes`, `column_config`, `run_when`, `formats`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors`) before writing an `output` column spec or when an error names a limit.
+Call the `help` tool (topics: `overview`, `enrich_modes`, `column_config`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors`) before writing an `output` column spec or when an error names a limit.
 
 If Riveter tools are missing from your tool list, suggest `/riveter-setup` instead of guessing or fabricating data.

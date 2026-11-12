@@ -42,7 +42,7 @@ The MCP server exposes the [Riveter API](https://docs.riveterhq.com) as tools. E
 | Inspect / pause / resume a monitor | `list_monitors`, `get_monitor`, `update_monitor`, `list_monitor_runs` | Existing monitors |
 | Account / credits | `get_account` | Balance and quota questions |
 | Configured list build | `build_configured_dataset` | A pre-configured template (`cds_...`) with `parameters`; the rows land in the dataset the run's `dataset_id` names |
-| Reference docs | `help` | Topics: `overview`, `enrich_modes`, `column_config`, `run_when`, `formats`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors` |
+| Reference docs | `help` | Topics: `overview`, `enrich_modes`, `column_config`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors` |
 
 ## Credits: estimate before you spend (memorize this)
 
@@ -73,7 +73,7 @@ Every kickoff (`enrich`, `build_dataset` with `count`, `run_extraction`, ...) re
 3. When `status` is `success`, read `output`. When `status` is `stopped`, read `error` / `stopped_reason` and surface it.
 4. If the user can wait minutes/hours, pass `webhook_url` and skip polling.
 
-Typical run takes **10–120 seconds**. `output` of a fill on a dataset is `{ "rows": [...] }` — the rows the fill ran, each with `input`, `cells` (`value` + `state` per column), `credits`; `list_dataset_rows` reads the whole grid. `output` of a run on inline `input` or of a build run is columnar: `{ "Company": [{ "value": "Apple" }, ...], "CEO": [{ "value": "Tim Cook" }, ...] }`. A response with a `legacy` key (`notice`, `successor`, `docs`) reached the legacy pipeline through a legacy id; it still worked, and `successor` says what to call instead.
+Typical run takes **10–120 seconds**. `output` of a fill on a dataset is `{ "rows": [...] }` — the rows the fill ran, each with `input`, `cells` (`value` + `state` per column), `credits`; `list_dataset_rows` reads the whole grid. `output` of a run on inline `input` or of a build run is columnar: `{ "Company": [{ "value": "Apple" }, ...], "CEO": [{ "value": "Tim Cook" }, ...] }`.
 
 ## Defining columns
 

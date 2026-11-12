@@ -2,7 +2,7 @@
 
 The Riveter plugin for Cursor: the MCP server entry, an always-on awareness rule, five skills, and seven slash commands. Hand-written prose over the hosted catalog; nothing here is generated. Git workflow: root [`AGENTS.md`](../AGENTS.md).
 
-This directory is the source. The public repository `github.com/riveterhq/riveter-cursor-plugin`, which the Cursor Marketplace installs from, is a mirror of it: one snapshot commit of this directory pushed onto its `main` by `.github/workflows/publish-clients.yml` (`sdk/scripts/push-mirror-snapshot.sh`) on every push to `main` that changes it (`PUBLISHING.md`; by hand when the workflow cannot run), never edited directly, and carrying none of the monorepo's commits. Everything the public repository needs — `README.md`, `LICENSE`, `install.sh` — therefore lives here. Until 2026-10-23 the public repository was edited on its own and last pushed on 2026-04-21, with the legacy verb tool names; its uncommitted September edits were folded into this directory and are superseded.
+This directory is the source. The public repository `github.com/riveterhq/riveter-cursor-plugin`, which the Cursor Marketplace installs from, is a mirror of it: one snapshot commit of this directory pushed onto its `main` by `.github/workflows/publish-clients.yml` (`sdk/scripts/push-mirror-snapshot.sh`) on every push to `main` that changes it (`PUBLISHING.md`; by hand when the workflow cannot run), never edited directly, and carrying none of the monorepo's commits. Everything the public repository needs — `README.md`, `LICENSE`, `install.sh` — therefore lives here.
 
 ## Layout
 
@@ -17,7 +17,7 @@ This directory is the source. The public repository `github.com/riveterhq/rivete
 ## Rules of the text
 
 - Every tool name is the snake_case `operationId` the MCP server generates; every argument is a spec field. If the spec does not have it, the plugin must not say it — the test enforces this.
-- Datasets first: rows go into a dataset (`build_dataset` with `rows`) and `enrich` fills it; inline `input` is the one-off. The plugin names no legacy tool: the retired list-build operations live only in `openapi.legacy.yaml`, and the test fails on any name the current spec lacks. A response's `legacy` key is explained where results are read (`riveter-best-practices`, `/riveter-status`).
+- Datasets first: rows go into a dataset (`build_dataset` with `rows`) and `enrich` fills it; inline `input` is the one-off. The plugin names only tools in `public/api_docs/openapi.yaml`, and the test fails on any name the spec lacks.
 - Paid calls estimate first with `estimate_cost: true` and respect `max_credits`; the credit rules in the awareness rule and `riveter-best-practices` must agree with the spec's `credits` help topic.
 - Long guidance lives in the spec's `x-mcp-help` topics, reached through `help`; the skills point there instead of repeating it.
 
@@ -30,7 +30,7 @@ node cursor-plugin/test/check-plugin-names.mjs ~/.cursor/plugins/local/riveter  
 
 ## Install locally
 
-Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-plugin/install.sh` copies the plugin components there and registers the plugin (`--uninstall` reverses it); a symlink to this directory works too. Reload Cursor; set `RIVETER_API_KEY` in the environment Cursor starts from, or run `/riveter-setup` to write the key into the project's `.cursor/mcp.json`. Before 2026-10-22 the plugin lived only in that local directory, with a key in its `mcp.json`, and had drifted (`dry_run`, the legacy list builder only).
+Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-plugin/install.sh` copies the plugin components there and registers the plugin (`--uninstall` reverses it); a symlink to this directory works too. Reload Cursor; set `RIVETER_API_KEY` in the environment Cursor starts from, or run `/riveter-setup` to write the key into the project's `.cursor/mcp.json`.
 
 ## Publish
 
@@ -40,4 +40,4 @@ Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-
 
 Rebuild from: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/`, `skills/`, `commands/`, `test/`, `README.md`, `install.sh`, `PUBLISHING.md`, `../public/api_docs/openapi.yaml` (tool names, arguments, help topics).
 
-Last verified: 2026-10-27
+Last verified: 2026-11-12
