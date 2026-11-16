@@ -104,8 +104,8 @@ When presenting enriched data to the user:
 
 ## Troubleshooting
 
-- **Tools not available**: Run `/riveter-setup`, confirm the `riveter` MCP server is enabled in **Cursor Settings → Tools & MCP**, and verify `RIVETER_API_KEY` is set in `.cursor/mcp.json`.
-- **401 / "API key required"**: The `RIVETER_API_KEY` env var on the MCP server is missing or invalid. Re-run `/riveter-setup` and paste a fresh key from https://app.riveterhq.com/settings/api.
+- **Tools not available**: Run `/riveter-setup`: the `riveter` MCP server must be turned on in **Customize** and signed in to Riveter.
+- **401 / "Invalid API key"**: The connection's key was revoked or is invalid. Ask the user to sign in to the `riveter` server again in **Customize**; with an API key in `.cursor/mcp.json`, re-run `/riveter-setup` and paste a fresh key from https://app.riveterhq.com/settings/api.
 - **`feature_not_enabled` (403)**: The account has not migrated to Datasets. Stop retrying; tell the user to open https://app.riveterhq.com/v2/datasets and click "Migrate to Datasets". `enrich` with inline `input` works meanwhile.
 - **`insufficient_credits`**: The response's `credit_detail` shows `credits_remaining`. Tell the user; do not retry.
 - **`credit_cap_exceeded`**: The estimate was above `max_credits`. Show the estimate and ask whether to raise the cap or shrink the request.

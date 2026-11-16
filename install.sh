@@ -111,7 +111,7 @@ json.dump(data, open(path, 'w'), indent=2)
   echo "  1. Restart Cursor (or Cmd/Ctrl+Shift+P → Developer: Reload Window)"
   echo "  2. If prompted, enable 'Include third-party Plugins' in Settings → Features"
   echo "  3. The plugin should appear under Settings → Plugins"
-  echo "  4. Run /riveter-setup in chat to configure your RIVETER_API_KEY"
+  echo "  4. Run /riveter-setup in chat to connect your Riveter account"
 }
 
 case "${1:-}" in

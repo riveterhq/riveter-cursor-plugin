@@ -13,7 +13,7 @@
 | **Schedule or inspect a monitor** | `riveter-monitors` | `/riveter-monitor <dataset + schedule>` |
 | **Check on a previous run** | — | `/riveter-status <run_...>` |
 
-Additional: `/riveter-setup` (configure the MCP server + API key), `riveter-best-practices` (tool selection, credit estimates, the async run pattern), `riveter-awareness` (always-on rule that nudges the agent to use Riveter when relevant).
+Additional: `/riveter-setup` (connect the MCP server to your Riveter account), `riveter-best-practices` (tool selection, credit estimates, the async run pattern), `riveter-awareness` (always-on rule that nudges the agent to use Riveter when relevant).
 
 The MCP server generates its tools from Riveter's [OpenAPI spec](https://docs.riveterhq.com/openapi.yaml), so every Riveter endpoint (`build_dataset`, `enrich`, `list_dataset_rows`, `scrape`, `search_agent`, `create_monitor`, `get_run`, `get_run_result`, ...) is exposed automatically, plus a `help` tool with reference topics.
 
@@ -21,7 +21,9 @@ The MCP server generates its tools from Riveter's [OpenAPI spec](https://docs.ri
 
 Install it from the Cursor Marketplace, or run `bash install.sh` from a clone (see [Local Development](#local-development)).
 
-The MCP server reads `RIVETER_API_KEY` from the environment Cursor starts from. Export it in your shell, or run `/riveter-setup` in chat to write the key into your project's `.cursor/mcp.json`.
+The plugin connects to Riveter's hosted MCP server, `https://mcp.riveterhq.com/mcp`; nothing runs on your machine. The first time, open **Customize** in the Cursor sidebar, turn on the **riveter** MCP server, and sign in when Cursor asks: a browser window opens on Riveter, where you sign in and click **Allow**. Riveter creates an API key for the connection, listed in Settings → API keys; revoking it disconnects Cursor. `/riveter-setup` in chat walks through the same steps.
+
+Team admins can import this repository as a team marketplace (Dashboard → Plugins & MCPs → Add Marketplace → Import from Repo). `.cursor-plugin/marketplace.json` lists the plugin.
 
 ### MCP only
 
@@ -31,17 +33,13 @@ If you just want the Riveter tools without skills, commands, or rules, add this 
 {
   "mcpServers": {
     "riveter": {
-      "command": "npx",
-      "args": ["-y", "--prefer-online", "riveter-mcp-server@latest"],
-      "env": {
-        "RIVETER_API_KEY": "sk_riv_your_key_here"
-      }
+      "url": "https://mcp.riveterhq.com/mcp"
     }
   }
 }
 ```
 
-Get an API key at https://app.riveterhq.com/settings/api.
+To use an API key instead of signing in, add `"headers": { "Authorization": "Bearer sk_riv_your_key_here" }` to the entry. Get an API key at https://app.riveterhq.com/settings/api. To run the server on your machine over stdio instead, see [riveter-mcp-server](https://www.npmjs.com/package/riveter-mcp-server).
 
 ## Quick start
 
@@ -89,11 +87,11 @@ Get an API key at https://app.riveterhq.com/settings/api.
 
 ## How it works
 
-1. The `riveter-mcp-server` npm package fetches Riveter's OpenAPI spec at startup and exposes every endpoint as an MCP tool with typed parameters.
+1. Riveter's hosted MCP server reads Riveter's OpenAPI spec and exposes every endpoint as an MCP tool with typed parameters.
 2. The skills tell Cursor's agent **when** and **how** to use those tools: rows go into a dataset and `enrich` fills it, paid calls are estimated first with `estimate_cost: true`, runs are async and read back with `get_run_result`.
 3. The `riveter-awareness` rule keeps Riveter top of mind so the agent reaches for it instead of fabricating lists or hand-rolling scrapers.
 
-The MCP server loads Riveter's API definition once, when Cursor starts it. After a Riveter API update, toggle the `riveter` server off and on in **Cursor Settings → Tools & MCP** (or reload the window) to get the new tools. No plugin update is required for new endpoints; the plugin changes when the guidance does.
+The hosted server reloads Riveter's API definition every 10 minutes, and Cursor reads the tool list when it connects. After a Riveter API update, turn the `riveter` server off and on in **Customize** (or reload the window) to get the new tools. No plugin update is required for new endpoints; the plugin changes when the guidance does.
 
 ## Local development
 
@@ -116,7 +114,7 @@ bash install.sh
 
 3. Restart Cursor (or `Cmd/Ctrl+Shift+P → Developer: Reload Window`).
 
-4. Type `/` in chat to verify the `riveter-*` commands and skills are listed, then run `/riveter-setup` to add your API key.
+4. Type `/` in chat to verify the `riveter-*` commands and skills are listed, then run `/riveter-setup` to connect your Riveter account.
 
 5. To uninstall:
 

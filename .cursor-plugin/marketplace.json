@@ -1,0 +1,17 @@
+{
+  "name": "riveter",
+  "owner": {
+    "name": "Riveter",
+    "email": "support@riveterhq.com"
+  },
+  "metadata": {
+    "description": "The Riveter plugin for Cursor"
+  },
+  "plugins": [
+    {
+      "name": "riveter",
+      "source": ".",
+      "category": "data"
+    }
+  ]
+}

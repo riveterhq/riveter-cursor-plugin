@@ -6,9 +6,10 @@ This directory is the source. The public repository `github.com/riveterhq/rivete
 
 ## Layout
 
-- `.cursor-plugin/plugin.json` — the manifest Cursor reads (name, version, `repository` = the public mirror, where the skills / rules / commands / `mcp.json` live).
+- `.cursor-plugin/plugin.json` — the manifest Cursor reads (name, version, `logo`, `repository` = the public mirror, where the skills / rules / commands / `mcp.json` live).
+- `.cursor-plugin/marketplace.json` — lists this one plugin (`source: "."`, `category`), so a team can import the mirror as a team marketplace (Dashboard → Plugins & MCPs → Import from Repo). Its entry's `name` must equal `plugin.json`'s.
 - `README.md`, `LICENSE`, `install.sh` — the public repository's face: install from the Marketplace or `bash install.sh` (copies the plugin components into `~/.cursor/plugins/local/riveter` and registers it). `PUBLISHING.md` is the mirror push.
-- `mcp.json` — the `riveter` MCP server: `npx riveter-mcp-server@latest` (stdio) with `RIVETER_API_KEY` from the environment (`${env:RIVETER_API_KEY}`). No key is stored in the repo; `/riveter-setup` writes the user's key into their project's `.cursor/mcp.json`.
+- `mcp.json` — the `riveter` MCP server: the hosted `https://mcp.riveterhq.com/mcp`, signed in through Riveter's OAuth server (`app/lib/mcp_connector/`; the access token is an `ApiKey`). No key is stored in the repo. When the user cannot sign in through a browser, `/riveter-setup` writes a `url` + `Authorization` header entry into the project's `.cursor/mcp.json`.
 - `rules/riveter-awareness.mdc` — always applied: when to reach for which tool, the async run pattern, `estimate_cost` / `max_credits`, the `feature_not_enabled` message, the `help` topics.
 - `skills/` — `riveter-enrich` (rows into a dataset, estimate, fill, poll, read the grid), `riveter-datasets` (generate rows with `prompt` + `count`; read / change / export an existing dataset; configured list builds), `riveter-monitors`, `riveter-scrape`, `riveter-best-practices` (the tool map and credit rules).
 - `commands/` — `/riveter-enrich`, `/riveter-build`, `/riveter-dataset`, `/riveter-monitor`, `/riveter-scrape`, `/riveter-status`, `/riveter-setup`.
@@ -30,7 +31,7 @@ node cursor-plugin/test/check-plugin-names.mjs ~/.cursor/plugins/local/riveter  
 
 ## Install locally
 
-Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-plugin/install.sh` copies the plugin components there and registers the plugin (`--uninstall` reverses it); a symlink to this directory works too. Reload Cursor; set `RIVETER_API_KEY` in the environment Cursor starts from, or run `/riveter-setup` to write the key into the project's `.cursor/mcp.json`.
+Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-plugin/install.sh` copies the plugin components there and registers the plugin (`--uninstall` reverses it); a symlink to this directory works too. Reload Cursor, then sign in to the `riveter` server from **Customize**, or run `/riveter-setup`.
 
 ## Publish
 
@@ -38,6 +39,6 @@ Cursor loads local plugins from `~/.cursor/plugins/local/<name>/`. `bash cursor-
 
 ## How to regenerate
 
-Rebuild from: `.cursor-plugin/plugin.json`, `mcp.json`, `rules/`, `skills/`, `commands/`, `test/`, `README.md`, `install.sh`, `PUBLISHING.md`, `../public/api_docs/openapi.yaml` (tool names, arguments, help topics).
+Rebuild from: `.cursor-plugin/plugin.json`, `.cursor-plugin/marketplace.json`, `mcp.json`, `rules/`, `skills/`, `commands/`, `test/`, `README.md`, `install.sh`, `PUBLISHING.md`, `../public/api_docs/openapi.yaml` (tool names, arguments, help topics).
 
 Last verified: 2026-11-12

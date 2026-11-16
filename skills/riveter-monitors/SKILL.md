@@ -134,5 +134,5 @@ Confirm `create_monitor` (under the `riveter` MCP server) is in your tool list.
 ### Request the user to:
 
 1. Run `/riveter-setup` in Cursor.
-2. Open **Cursor Settings → Tools & MCP** and toggle `riveter` **on**.
+2. Open **Customize** in the Cursor sidebar, turn the `riveter` MCP server on, and sign in to Riveter if Cursor asks.
 3. Retry.
