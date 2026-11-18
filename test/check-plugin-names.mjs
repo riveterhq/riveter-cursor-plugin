@@ -11,8 +11,7 @@
 //   - every backticked snake_case token (`estimate_cost`, `credit_detail`,
 //     `datasets_vs_enrichment`): it must be a tool name, an argument name, a
 //     schema property, an enum value, a help topic, or a token the spec itself
-//     writes in backticks;
-//   - DEPRECATED_NAMES never appear, even though the spec still mentions them.
+//     writes in backticks.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, extname, join, relative } from "node:path";
@@ -37,7 +36,6 @@ async function readSpecText() {
   return response.text();
 }
 
-const DEPRECATED_NAMES = ["dry_run"];
 const SNAKE_TOKEN = /^[a-z][a-z0-9]*(?:_[a-z0-9]+)+$/;
 
 // --- the spec's vocabulary ---------------------------------------------------
@@ -111,7 +109,6 @@ function specVocabulary(tools) {
   collectStrings(spec.paths, words);
   for (const topic of Object.keys(spec.info["x-mcp-help"] ?? {})) words.add(topic);
   for (const match of specText.matchAll(/`([a-z][a-z0-9_]*)`/g)) words.add(match[1]);
-  for (const name of DEPRECATED_NAMES) words.delete(name);
   return words;
 }
 
@@ -198,9 +195,6 @@ function checkFile(path, tools, vocabulary) {
   }
   for (const token of backtickedTokens(text)) {
     if (!vocabulary.has(token)) problems.push(`\`${token}\` is not in the spec`);
-  }
-  for (const name of DEPRECATED_NAMES) {
-    if (new RegExp(`\\b${name}\\b`).test(text)) problems.push(`uses the deprecated name ${name}`);
   }
   return problems;
 }

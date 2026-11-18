@@ -13,7 +13,7 @@ This directory is the source. The public repository `github.com/riveterhq/rivete
 - `rules/riveter-awareness.mdc` — always applied: when to reach for which tool, the async run pattern, `estimate_cost` / `max_credits`, the `feature_not_enabled` message, the `help` topics, when to send `submit_feedback`.
 - `skills/` — `riveter-enrich` (rows into a dataset, estimate, fill, poll, read the grid), `riveter-datasets` (generate rows with `prompt` + `count`; read / change / export an existing dataset; configured list builds), `riveter-monitors`, `riveter-scrape`, `riveter-best-practices` (the tool map and credit rules).
 - `commands/` — `/riveter-enrich`, `/riveter-build`, `/riveter-dataset`, `/riveter-monitor`, `/riveter-scrape`, `/riveter-status`, `/riveter-setup`.
-- `test/check-plugin-names.mjs` — fails when the prose names a tool, argument, field, or help topic that `public/api_docs/openapi.yaml` does not define, when a `tool_name({ ... })` code block sends an argument the tool does not take, or when `dry_run` appears (`docs/cli-plan.md` check 5). Run on every spec or plugin change. Reads the spec next door in the monorepo; in the mirror it fetches `https://docs.riveterhq.com/openapi.yaml` (`RIVETER_OPENAPI_URL` overrides).
+- `test/check-plugin-names.mjs` — fails when the prose names a tool, argument, field, or help topic that `public/api_docs/openapi.yaml` does not define, when a `tool_name({ ... })` code block sends an argument the tool does not take (`docs/cli-plan.md` check 5). Run on every spec or plugin change. Reads the spec next door in the monorepo; in the mirror it fetches `https://docs.riveterhq.com/openapi.yaml` (`RIVETER_OPENAPI_URL` overrides).
 
 ## Rules of the text
 
