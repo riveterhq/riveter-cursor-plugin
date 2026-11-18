@@ -26,4 +26,6 @@ Almost every Riveter run is **async**: kick off → the response is a run with a
 
 Call the `help` tool (topics: `overview`, `enrich_modes`, `column_config`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors`) before writing an `output` column spec or when an error names a limit.
 
+**When a Riveter tool gets in the way** (a call fails and you cannot work around it, a description or error message misleads you, a capability is missing), call `submit_feedback` once you are done or blocked: `title`, `details` (what you called, what came back, what you expected), and the `proposed_fix`. It is free and goes to the Riveter team. Leave out API keys and row contents, and tell the user you sent it.
+
 If Riveter tools are missing from your tool list, suggest `/riveter-setup` instead of guessing or fabricating data.

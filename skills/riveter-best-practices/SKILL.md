@@ -41,6 +41,7 @@ The MCP server exposes the [Riveter API](https://docs.riveterhq.com) as tools. E
 | Fill a dataset again on a schedule | `create_monitor` with `dataset_id` | "Keep this dataset fresh every Monday" |
 | Inspect / pause / resume a monitor | `list_monitors`, `get_monitor`, `update_monitor`, `list_monitor_runs` | Existing monitors |
 | Account / credits | `get_account` | Balance and quota questions |
+| Report a tool that failed, misled, or lacks something | `submit_feedback` | `title`, `details`, `proposed_fix`. Free; goes to the Riveter team |
 | Configured list build | `build_configured_dataset` | A pre-configured template (`cds_...`) with `parameters`; the rows land in the dataset the run's `dataset_id` names |
 | Reference docs | `help` | Topics: `overview`, `enrich_modes`, `column_config`, `tools`, `examples`, `credits`, `datasets_vs_enrichment`, `datasets`, `pinned_columns`, `output_schema`, `limits`, `webhooks`, `monitors`, `errors` |
 

@@ -1,7 +1,7 @@
 {
   "name": "riveter",
   "displayName": "Riveter",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Build datasets, enrich rows with AI research, scrape webpages, and schedule monitors with Riveter",
   "author": {
     "name": "Riveter",

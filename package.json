@@ -1,6 +1,6 @@
 {
   "name": "riveter-cursor-plugin",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "The Riveter Cursor plugin: MCP server entry, awareness rule, skills, and commands. Not on npm; mirrored to github.com/riveterhq/riveter-cursor-plugin for the Cursor Marketplace (PUBLISHING.md).",
   "type": "module",
